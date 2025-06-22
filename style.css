@@ -1,14 +1,16 @@
 /* Full Page Background Overlay */
 .page-overlay {
-  position: fixed; /* Fix it to the page */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
-  background-image: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg'); /* Replace with your image URL */
-  background-size: cover; /* Ensure the image covers the entire page */
-  background-position: center; /* Center the image */
-  z-index: -1; /* Place it behind the content */
+  width: 100%;
+  height: 100%;
+  background-image: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -1;
 }
 
 /* General Styling */
@@ -32,10 +34,15 @@ h1, h2 {
 
 /* Profile Section */
 .profile-section {
-  background-color: #transparent; /* Fallback color */
+  background-color: #transparent;
   padding: 40px;
   border-radius: 10px;
   margin-bottom: 40px;
+}
+.profile img {
+  border-radius: 8px;
+  max-width: 150px;
+  border: 2px solid #000000; /* Add border directly to image */
 }
 
 /* Profile content */
@@ -63,28 +70,25 @@ h1, h2 {
 .profile-info p {
   font-size: 1.1em;
 }
-
-/* Social Media Links */
-.social-media-links {
-  display: flex;
-  gap: 15px;
+.profile-box {
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 20px;
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
 }
-
-.social-icon {
-  width: 30px;
-  height: 30px;
-}
-
-/* Social Media Links */
-.social-media-links {
+.profile-section {
   display: flex;
+  justify-content: center;
+}
+/* Social Media Links (updated to grid for 8 per row) */
+.social-media-links {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
   gap: 10px;
   margin-top: 10px;
-}
-
-.social-media-links a {
-  position: relative;
-  display: inline-block;
+  justify-items: center;
 }
 
 .social-icon {
@@ -95,16 +99,19 @@ h1, h2 {
 }
 
 .social-icon:hover {
-  transform: scale(1.1); /* Hover effect */
+  transform: scale(1.1);
 }
 
-/* Tooltip (show @username on hover) */
+/* Tooltip */
+.social-link {
+  position: relative;
+}
 .social-link::after {
   content: attr(data-tooltip);
   position: absolute;
-  top: 35px; /* Position above the icon */
+  bottom: 100%; /* put tooltip directly above the icon */
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-8px); /* small vertical offset above the icon */
   padding: 5px 10px;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
@@ -113,25 +120,19 @@ h1, h2 {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s;
+  white-space: nowrap;
+  pointer-events: none;
 }
-
 .social-link:hover::after {
   opacity: 1;
   visibility: visible;
 }
 
 /* Recent Activity Section */
-.recent-activity {
-  margin-top: 30px;
-  border: 2px solid #000000; /* Added border around activity section */
-  border-radius: 10px; /* Rounded corners for the activity section */
-  padding: 20px; /* Padding to give space inside the border */
-}
-
 .recent-activity h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #000000; /* Ensure heading has black color */
+  color: #000000;
 }
 
 .activity {
@@ -146,10 +147,11 @@ h1, h2 {
   background: transparent;
   border-radius: 8px;
   padding: 12px;
-  width: 180px; /* Set card width */
+  width: 180px;
   text-align: center;
-  margin-bottom: 15px; /* Slight space between cards */
-  box-shadow: none; /* Removed the box shadow to make them connected */
+  margin-bottom: 15px;
+  box-shadow: none;
+  border: 2px solid #000000;
 }
 
 .activity-card img {
@@ -166,12 +168,12 @@ h1, h2 {
 .activity-card .activity-details h3 {
   font-size: 14px;
   font-weight: bold;
-  color: #000000; /* Updated to match the rest of the text */
+  color: #000000;
 }
 
 .activity-card .activity-details p {
   font-size: 12px;
-  color: #000000; /* Updated to black for the posted date */
+  color: #000000;
   margin-bottom: 8px;
 }
 
@@ -179,13 +181,13 @@ h1, h2 {
   display: inline-block;
   margin-top: 8px;
   text-decoration: none;
-  color: blue; /* All links will be blue now */
+  color: blue;
   font-size: 13px;
   font-weight: bold;
 }
 
 .activity-card .activity-details a:hover {
-  text-decoration: underline; /* Underline the link when hovered */
+  text-decoration: underline;
 }
 
 /* Minecraft Accounts Section */
@@ -200,19 +202,4 @@ h1, h2 {
 .account {
   background-color: #fff;
   padding: 15px;
-  border-radius: 10px;
-  width: 30%;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.account img {
-  border-radius: 8px;
-  max-width: 120px;
-  margin-bottom: 10px;
-}
-
-.account p {
-  font-size: 1.1em;
-  margin: 5px 0;
-}
+  bord
