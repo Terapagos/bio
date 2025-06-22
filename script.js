@@ -19,7 +19,7 @@ async function fetchKenmeiActivity() {
     }
 
     // Limit to the last 10 activities (most recent)
-    const lastTenActivities = activities.slice(0, 10);
+    const lastTenActivities = activities.slice(0, 4);
 
     // Display the activity items
     const activityFeed = document.getElementById('activity-feed');
