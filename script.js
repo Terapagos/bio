@@ -1,52 +1,50 @@
 // --- Fetch Kenmei Activity ---
 async function fetchKenmeiActivity() {
+  const activityFeed = document.getElementById('activity-feed');
   try {
     const response = await fetch('https://40d538ba-3c5f-4319-86e0-307c24da2c59-00-2ariedr1c85ip.worf.replit.dev/get-activity');
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    if (!response.ok) throw new Error('Network response was not ok');
 
     const activities = await response.json();
     console.log("Fetched Activities:", activities);
 
-    if (!activities || activities.length === 0) {
-      document.getElementById('activity-feed').innerHTML = 'No recent activity available.';
+    if (!activities?.length) {
+      activityFeed.textContent = 'No recent activity available.';
       return;
     }
 
-    const lastTenActivities = activities.slice(0, 8);
-    const activityFeed = document.getElementById('activity-feed');
-    activityFeed.innerHTML = '';
-
-    lastTenActivities.forEach(activity => {
-      const activityCard = document.createElement('div');
-      activityCard.classList.add('activity-card');
-      activityCard.innerHTML = `
+    const lastActivities = activities.slice(0, 8);
+    activityFeed.innerHTML = lastActivities.map(activity => `
+      <div class="activity-card">
         <img src="${activity.cover}" alt="Cover Image">
         <div class="activity-details">
           <h3>${activity.text}</h3>
           <p class="timestamp">Posted on: ${new Date(activity.timestamp).toLocaleDateString()}</p>
         </div>
-      `;
-      activityFeed.appendChild(activityCard);
-    });
+      </div>
+    `).join('');
 
   } catch (error) {
     console.error('Error fetching activity:', error);
-    document.getElementById('activity-feed').innerHTML = 'Failed to load activity. Please try again later.';
+    activityFeed.textContent = 'Failed to load activity. Please try again later.';
   }
 }
 
-document.addEventListener('DOMContentLoaded', fetchKenmeiActivity);
-
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll(".card");
-  const memberName = document.querySelector(".member-name");
-  const leftArrow = document.querySelector(".nav-arrow.left");
-  const rightArrow = document.querySelector(".nav-arrow.right");
+// --- Carousel Logic with Swipe Support ---
+function setupCarousel() {
+  const carousel = document.querySelector('.carousel-container');
+  const track = document.querySelector('.carousel-track');
+  const cards = document.querySelectorAll('.card');
+  const memberName = document.querySelector('.member-name');
 
   let currentIndex = 0;
+  let isDragging = false;
+  let startPos = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
+  let animationID;
+
   const names = [
     "MrClean", "55555555555", "6999", "Aldeanos", "Armarouge", "BoaHancock",
     "Brambleghast", "Charcadet", "Dachsbun", "DRUGZ", "Gestella", "Lortelle",
@@ -61,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentIndex = (newIndex + cards.length) % cards.length;
 
     cards.forEach((card, i) => {
-      card.classList.remove("center", "left-1", "left-2", "right-1", "right-2", "hidden");
+      card.className = 'card';
       const offset = (i - currentIndex + cards.length) % cards.length;
 
       if (offset === 0) card.classList.add("center");
@@ -75,8 +73,61 @@ document.addEventListener('DOMContentLoaded', () => {
     memberName.textContent = names[currentIndex];
   }
 
-  leftArrow.addEventListener("click", () => updateCarousel(currentIndex - 1));
-  rightArrow.addEventListener("click", () => updateCarousel(currentIndex + 1));
+  // --- Swipe logic ---
+  track.addEventListener('mousedown', startDrag);
+  track.addEventListener('touchstart', startDrag);
+
+  track.addEventListener('mousemove', drag);
+  track.addEventListener('touchmove', drag);
+
+  track.addEventListener('mouseup', endDrag);
+  track.addEventListener('mouseleave', endDrag);
+  track.addEventListener('touchend', endDrag);
+
+  function startDrag(e) {
+    isDragging = true;
+    startPos = getPositionX(e);
+    animationID = requestAnimationFrame(animation);
+  }
+
+  function drag(e) {
+    if (!isDragging) return;
+    const currentPosition = getPositionX(e);
+    currentTranslate = prevTranslate + currentPosition - startPos;
+  }
+
+  function endDrag() {
+    cancelAnimationFrame(animationID);
+    if (!isDragging) return;
+    isDragging = false;
+
+    const movedBy = currentTranslate - prevTranslate;
+
+    if (movedBy < -100) {
+      updateCarousel(currentIndex + 1);
+    } else if (movedBy > 100) {
+      updateCarousel(currentIndex - 1);
+    } else {
+      updateCarousel(currentIndex);
+    }
+
+    currentTranslate = 0;
+    prevTranslate = 0;
+  }
+
+  function getPositionX(e) {
+    return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+  }
+
+  function animation() {
+    if (isDragging) requestAnimationFrame(animation);
+  }
 
   updateCarousel(0);
+}
+
+// --- Initialize everything after DOM loaded ---
+document.addEventListener('DOMContentLoaded', () => {
+  fetchKenmeiActivity();
+  setupCarousel();
 });
