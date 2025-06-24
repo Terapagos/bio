@@ -128,25 +128,20 @@ function setupMusicPlayer() {
   ];
 
   let currentSongIndex = 0;
-  loadSong(currentSongIndex);
+  let songLoaded = false;
 
-function loadSong(index, autoplay = true) {
-  audioPlayer.src = songs[index].url;
-  songTitleDisplay.textContent = songs[index].title;
-  audioPlayer.load();
-
-  if (autoplay) {
-    audioPlayer.play().then(() => {
-      updatePlayIcon(true);
-    }).catch(err => {
-      console.warn("Autoplay blocked:", err);
-      updatePlayIcon(false);
-    });
-  } else {
-    updatePlayIcon(false);
+  function loadSong(index) {
+    audioPlayer.src = songs[index].url;
+    songTitleDisplay.textContent = songs[index].title;
+    audioPlayer.load();
+    songLoaded = true;
   }
-}
+
   function togglePlayPause() {
+    if (!songLoaded) {
+      loadSong(currentSongIndex);
+    }
+
     if (audioPlayer.paused) {
       audioPlayer.play().then(() => {
         playPauseIcon.classList.remove("fa-play");
@@ -165,7 +160,7 @@ function loadSong(index, autoplay = true) {
     audioPlayer.play().then(() => {
       playPauseIcon.classList.remove("fa-play");
       playPauseIcon.classList.add("fa-pause");
-    }).catch(err => console.error("Playback failed:", err));
+    });
   }
 
   function prevSong() {
@@ -174,7 +169,7 @@ function loadSong(index, autoplay = true) {
     audioPlayer.play().then(() => {
       playPauseIcon.classList.remove("fa-play");
       playPauseIcon.classList.add("fa-pause");
-    }).catch(err => console.error("Playback failed:", err));
+    });
   }
 
   function shuffleSong() {
@@ -187,7 +182,7 @@ function loadSong(index, autoplay = true) {
     audioPlayer.play().then(() => {
       playPauseIcon.classList.remove("fa-play");
       playPauseIcon.classList.add("fa-pause");
-    }).catch(err => console.error("Playback failed:", err));
+    });
   }
 
   playPauseBtn.addEventListener("click", togglePlayPause);
@@ -217,6 +212,7 @@ function loadSong(index, autoplay = true) {
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   }
 }
+
 
 // --- Initialize everything ---
 document.addEventListener('DOMContentLoaded', () => {
