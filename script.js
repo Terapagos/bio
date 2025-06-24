@@ -109,10 +109,7 @@ function setupCarousel() {
 }
 
 // --- Mini Music Player Logic ---
-document.addEventListener('DOMContentLoaded', () => {
-  fetchKenmeiActivity();
-  setupCarousel();
-
+function setupMusicPlayer() {
   const audioPlayer = document.getElementById("audioPlayer");
   const playPauseBtn = document.getElementById("playPauseBtn");
   const playPauseIcon = document.getElementById("playPauseIcon");
@@ -139,44 +136,35 @@ document.addEventListener('DOMContentLoaded', () => {
     audioPlayer.load();
   }
 
-  function playSong() {
-    if (audioPlayer.readyState >= 4) {
-      audioPlayer.play();
-      playPauseIcon.classList.remove("fa-play");
-      playPauseIcon.classList.add("fa-pause");
-    } else {
-      audioPlayer.addEventListener("canplaythrough", () => {
-        audioPlayer.play();
-        playPauseIcon.classList.remove("fa-play");
-        playPauseIcon.classList.add("fa-pause");
-      }, { once: true });
-    }
-  }
-
-  function pauseSong() {
-    audioPlayer.pause();
-    playPauseIcon.classList.remove("fa-pause");
-    playPauseIcon.classList.add("fa-play");
-  }
-
   function togglePlayPause() {
     if (audioPlayer.paused) {
-      playSong();
+      audioPlayer.play().then(() => {
+        playPauseIcon.classList.remove("fa-play");
+        playPauseIcon.classList.add("fa-pause");
+      }).catch(err => console.error("Playback failed:", err));
     } else {
-      pauseSong();
+      audioPlayer.pause();
+      playPauseIcon.classList.remove("fa-pause");
+      playPauseIcon.classList.add("fa-play");
     }
   }
 
   function nextSong() {
     currentSongIndex = (currentSongIndex + 1) % songs.length;
     loadSong(currentSongIndex);
-    playSong();
+    audioPlayer.play().then(() => {
+      playPauseIcon.classList.remove("fa-play");
+      playPauseIcon.classList.add("fa-pause");
+    }).catch(err => console.error("Playback failed:", err));
   }
 
   function prevSong() {
     currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     loadSong(currentSongIndex);
-    playSong();
+    audioPlayer.play().then(() => {
+      playPauseIcon.classList.remove("fa-play");
+      playPauseIcon.classList.add("fa-pause");
+    }).catch(err => console.error("Playback failed:", err));
   }
 
   function shuffleSong() {
@@ -186,10 +174,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } while (randomIndex === currentSongIndex);
     currentSongIndex = randomIndex;
     loadSong(currentSongIndex);
-    playSong();
+    audioPlayer.play().then(() => {
+      playPauseIcon.classList.remove("fa-play");
+      playPauseIcon.classList.add("fa-pause");
+    }).catch(err => console.error("Playback failed:", err));
   }
 
-  // Event Listeners
   playPauseBtn.addEventListener("click", togglePlayPause);
   nextBtn.addEventListener("click", nextSong);
   prevBtn.addEventListener("click", prevSong);
@@ -216,4 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const secs = Math.floor(seconds % 60);
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   }
+}
+
+// --- Initialize everything ---
+document.addEventListener('DOMContentLoaded', () => {
+  fetchKenmeiActivity();
+  setupCarousel();
+  setupMusicPlayer();
 });
