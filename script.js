@@ -229,6 +229,34 @@ function setupMusicPlayer() {
   updateSongDisplay();
   updatePlayPauseIcon();
 }
+async function fetchLanyardStatus() {
+  try {
+    const res = await fetch('https://api.lanyard.rest/v1/users/313316940238028800');
+    const data = await res.json();
+
+    const statusDiv = document.getElementById('activity-status');
+    
+    if (data.success && data.data) {
+      if (data.data.activities.length > 0) {
+        // Get the first activity
+        const activity = data.data.activities[0];
+        const activityName = activity.name;
+
+        statusDiv.textContent = `Playing ${activityName}`;
+      } else {
+        statusDiv.textContent = 'Offline';
+      }
+    } else {
+      statusDiv.textContent = 'Offline';
+    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById('activity-status').textContent = 'Offline';
+  }
+}
+
+// Call it once on page load
+fetchLanyardStatus();
 
 // --- Initialize everything ---
 document.addEventListener('DOMContentLoaded', () => {
