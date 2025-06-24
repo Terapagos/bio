@@ -129,12 +129,23 @@ function setupMusicPlayer() {
 
   let currentSongIndex = 0;
   let songLoaded = false;
+  let isPlaying = false;
 
   function loadSong(index) {
     audioPlayer.src = songs[index].url;
     songTitleDisplay.textContent = songs[index].title;
     audioPlayer.load();
     songLoaded = true;
+  }
+
+  function updatePlayPauseIcon() {
+    if (isPlaying) {
+      playPauseIcon.classList.remove("fa-play");
+      playPauseIcon.classList.add("fa-pause");
+    } else {
+      playPauseIcon.classList.remove("fa-pause");
+      playPauseIcon.classList.add("fa-play");
+    }
   }
 
   function togglePlayPause() {
@@ -144,51 +155,36 @@ function setupMusicPlayer() {
 
     if (audioPlayer.paused) {
       audioPlayer.play().then(() => {
-        playPauseIcon.classList.remove("fa-play");
-        playPauseIcon.classList.add("fa-pause");
+        isPlaying = true;
+        updatePlayPauseIcon();
       }).catch(err => console.error("Playback failed:", err));
     } else {
       audioPlayer.pause();
-      playPauseIcon.classList.remove("fa-pause");
-      playPauseIcon.classList.add("fa-play");
+      isPlaying = false;
+      updatePlayPauseIcon();
     }
   }
 
-  function nextSong() {
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
+  function changeSong(newIndex) {
+    currentSongIndex = (newIndex + songs.length) % songs.length;
     loadSong(currentSongIndex);
-    audioPlayer.play().then(() => {
-      playPauseIcon.classList.remove("fa-play");
-      playPauseIcon.classList.add("fa-pause");
-    });
+    if (isPlaying) {
+      audioPlayer.play().then(updatePlayPauseIcon);
+    } else {
+      updatePlayPauseIcon();
+    }
   }
 
-  function prevSong() {
-    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    loadSong(currentSongIndex);
-    audioPlayer.play().then(() => {
-      playPauseIcon.classList.remove("fa-play");
-      playPauseIcon.classList.add("fa-pause");
-    });
-  }
-
-  function shuffleSong() {
+  playPauseBtn.addEventListener("click", togglePlayPause);
+  nextBtn.addEventListener("click", () => changeSong(currentSongIndex + 1));
+  prevBtn.addEventListener("click", () => changeSong(currentSongIndex - 1));
+  shuffleBtn.addEventListener("click", () => {
     let randomIndex;
     do {
       randomIndex = Math.floor(Math.random() * songs.length);
     } while (randomIndex === currentSongIndex);
-    currentSongIndex = randomIndex;
-    loadSong(currentSongIndex);
-    audioPlayer.play().then(() => {
-      playPauseIcon.classList.remove("fa-play");
-      playPauseIcon.classList.add("fa-pause");
-    });
-  }
-
-  playPauseBtn.addEventListener("click", togglePlayPause);
-  nextBtn.addEventListener("click", nextSong);
-  prevBtn.addEventListener("click", prevSong);
-  shuffleBtn.addEventListener("click", shuffleSong);
+    changeSong(randomIndex);
+  });
 
   audioPlayer.addEventListener("loadedmetadata", () => {
     progressBar.max = audioPlayer.duration;
@@ -204,7 +200,7 @@ function setupMusicPlayer() {
     audioPlayer.currentTime = progressBar.value;
   });
 
-  audioPlayer.addEventListener("ended", nextSong);
+  audioPlayer.addEventListener("ended", () => changeSong(currentSongIndex + 1));
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -212,7 +208,6 @@ function setupMusicPlayer() {
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   }
 }
-
 
 // --- Initialize everything ---
 document.addEventListener('DOMContentLoaded', () => {
