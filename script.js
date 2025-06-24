@@ -211,8 +211,3 @@ const songs = [
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   }
 });
-document.addEventListener('click', function() {
-  if (audioPlayer.paused) {
-    playSong();  // This updates both the audio and the icon!
-  }
-}, { once: true });
