@@ -212,5 +212,7 @@ const songs = [
   }
 });
 document.addEventListener('click', function() {
-  audioPlayer.play();
+  if (audioPlayer.paused) {
+    playSong();  // This updates both the audio and the icon!
+  }
 }, { once: true });
