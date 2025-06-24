@@ -110,7 +110,6 @@ function setupCarousel() {
 
 // --- Mini Music Player Logic ---
 function setupMusicPlayer() {
-  const audioPlayer = document.getElementById("audioPlayer");
   const playPauseBtn = document.getElementById("playPauseBtn");
   const playPauseIcon = document.getElementById("playPauseIcon");
   const prevBtn = document.getElementById("prevBtn");
@@ -127,15 +126,17 @@ function setupMusicPlayer() {
     { title: "The Line", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/The%20Line.mp3" }
   ];
 
+  const audioElements = songs.map(song => {
+    const audio = new Audio(song.url);
+    audio.preload = "auto";
+    return audio;
+  });
+
   let currentSongIndex = 0;
-  let songLoaded = false;
   let isPlaying = false;
 
-  function loadSong(index) {
-    audioPlayer.src = songs[index].url;
-    songTitleDisplay.textContent = songs[index].title;
-    audioPlayer.load();
-    songLoaded = true;
+  function updateSongDisplay() {
+    songTitleDisplay.textContent = songs[currentSongIndex].title;
   }
 
   function updatePlayPauseIcon() {
@@ -148,33 +149,44 @@ function setupMusicPlayer() {
     }
   }
 
+  function playCurrentSong() {
+    audioElements[currentSongIndex].play().catch(err => console.error("Play failed:", err));
+    isPlaying = true;
+    updatePlayPauseIcon();
+  }
+
+  function pauseCurrentSong() {
+    audioElements[currentSongIndex].pause();
+    isPlaying = false;
+    updatePlayPauseIcon();
+  }
+
   function togglePlayPause() {
-    if (!songLoaded) {
-      loadSong(currentSongIndex);
-    }
-
-    if (audioPlayer.paused) {
-      audioPlayer.play().then(() => {
-        isPlaying = true;
-        updatePlayPauseIcon();
-      }).catch(err => console.error("Playback failed:", err));
-    } else {
-      audioPlayer.pause();
-      isPlaying = false;
-      updatePlayPauseIcon();
-    }
-  }
-
-  function changeSong(newIndex) {
-    currentSongIndex = (newIndex + songs.length) % songs.length;
-    loadSong(currentSongIndex);
     if (isPlaying) {
-      audioPlayer.play().then(updatePlayPauseIcon);
+      pauseCurrentSong();
     } else {
-      updatePlayPauseIcon();
+      playCurrentSong();
     }
   }
 
+ function changeSong(newIndex) {
+  pauseCurrentSong();
+  audioElements[currentSongIndex].currentTime = 0;
+  currentSongIndex = (newIndex + songs.length) % songs.length;
+  updateSongDisplay();
+
+  // Update duration and progress bar for new song
+  const currentAudio = audioElements[currentSongIndex];
+  progressBar.max = currentAudio.duration;
+  totalTimeDisplay.textContent = formatTime(currentAudio.duration);
+
+  if (isPlaying) {
+    playCurrentSong();
+  }
+}
+
+
+  // Event Listeners
   playPauseBtn.addEventListener("click", togglePlayPause);
   nextBtn.addEventListener("click", () => changeSong(currentSongIndex + 1));
   prevBtn.addEventListener("click", () => changeSong(currentSongIndex - 1));
@@ -186,27 +198,39 @@ function setupMusicPlayer() {
     changeSong(randomIndex);
   });
 
-  audioPlayer.addEventListener("loadedmetadata", () => {
-    progressBar.max = audioPlayer.duration;
-    totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
-  });
+  // Update progress bar for current song
+  audioElements.forEach((audio, index) => {
+    audio.addEventListener("loadedmetadata", () => {
+      if (index === currentSongIndex) {
+        progressBar.max = audio.duration;
+        totalTimeDisplay.textContent = formatTime(audio.duration);
+      }
+    });
 
-  audioPlayer.addEventListener("timeupdate", () => {
-    progressBar.value = audioPlayer.currentTime;
-    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+    audio.addEventListener("timeupdate", () => {
+      if (index === currentSongIndex) {
+        progressBar.value = audio.currentTime;
+        currentTimeDisplay.textContent = formatTime(audio.currentTime);
+      }
+    });
+
+    audio.addEventListener("ended", () => {
+      changeSong(currentSongIndex + 1);
+    });
   });
 
   progressBar.addEventListener("input", () => {
-    audioPlayer.currentTime = progressBar.value;
+    audioElements[currentSongIndex].currentTime = progressBar.value;
   });
-
-  audioPlayer.addEventListener("ended", () => changeSong(currentSongIndex + 1));
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   }
+
+  updateSongDisplay();
+  updatePlayPauseIcon();
 }
 
 // --- Initialize everything ---
