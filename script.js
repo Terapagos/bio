@@ -130,12 +130,22 @@ function setupMusicPlayer() {
   let currentSongIndex = 0;
   loadSong(currentSongIndex);
 
-  function loadSong(index) {
-    audioPlayer.src = songs[index].url;
-    songTitleDisplay.textContent = songs[index].title;
-    audioPlayer.load();
-  }
+function loadSong(index, autoplay = true) {
+  audioPlayer.src = songs[index].url;
+  songTitleDisplay.textContent = songs[index].title;
+  audioPlayer.load();
 
+  if (autoplay) {
+    audioPlayer.play().then(() => {
+      updatePlayIcon(true);
+    }).catch(err => {
+      console.warn("Autoplay blocked:", err);
+      updatePlayIcon(false);
+    });
+  } else {
+    updatePlayIcon(false);
+  }
+}
   function togglePlayPause() {
     if (audioPlayer.paused) {
       audioPlayer.play().then(() => {
