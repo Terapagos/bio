@@ -25,7 +25,7 @@ async function fetchKenmeiActivity() {
   }
 }
 
-// --- Carousel Logic with Swipe Support ---
+// --- Carousel Logic ---
 function setupCarousel() {
   const carousel = document.querySelector('.carousel-container');
   const track = document.querySelector('.carousel-track');
@@ -122,30 +122,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressBar = document.getElementById("progressBar");
   const currentTimeDisplay = document.getElementById("currentTime");
   const totalTimeDisplay = document.getElementById("totalTime");
-  const songTitleDisplay = document.getElementById("songTitle"); // ADD THIS
+  const songTitleDisplay = document.getElementById("songTitle");
 
-const songs = [
-  { title: "The Line", url: "https://raw.githubusercontent.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/main/The%20Line.mp3" },
-  { title: "Interia", url: "https://raw.githubusercontent.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/main/Interia.mp3" },
-  { title: "Heroic Desire", url: "https://raw.githubusercontent.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/main/heroic%20desire.mp3" }
-];
+  const songs = [
+    { title: "Heroic Desire", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/heroic%20desire.mp3" },
+    { title: "Interia", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/Interia.mp3" },
+    { title: "The Line", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/The%20Line.mp3" }
+  ];
 
   let currentSongIndex = 0;
   loadSong(currentSongIndex);
-  audioPlayer.addEventListener("canplaythrough", () => {
-  playPauseBtn.disabled = false;
-}, { once: true });
 
   function loadSong(index) {
     audioPlayer.src = songs[index].url;
+    songTitleDisplay.textContent = songs[index].title;
     audioPlayer.load();
-    songTitleDisplay.textContent = songs[index].title; // Update title display
   }
 
   function playSong() {
-    audioPlayer.play();
-    playPauseIcon.classList.remove("fa-play");
-    playPauseIcon.classList.add("fa-pause");
+    if (audioPlayer.readyState >= 4) {
+      audioPlayer.play();
+      playPauseIcon.classList.remove("fa-play");
+      playPauseIcon.classList.add("fa-pause");
+    } else {
+      audioPlayer.addEventListener("canplaythrough", () => {
+        audioPlayer.play();
+        playPauseIcon.classList.remove("fa-play");
+        playPauseIcon.classList.add("fa-pause");
+      }, { once: true });
+    }
   }
 
   function pauseSong() {
@@ -212,17 +217,3 @@ const songs = [
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   }
 });
-function loadSong(index) {
-  audioPlayer.src = songs[index].url;
-  audioPlayer.load();
-
-  playPauseIcon.classList.remove("fa-pause");
-  playPauseIcon.classList.add("fa-play");
-
-  audioPlayer.addEventListener("canplaythrough", () => {
-    // fully ready, enable controls
-    playPauseBtn.disabled = false;
-  }, { once: true });
-
-  playPauseBtn.disabled = true;
-}
