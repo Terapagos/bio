@@ -31,6 +31,8 @@ function setupCarousel() {
   const track = document.querySelector('.carousel-track');
   const cards = document.querySelectorAll('.card');
   const memberName = document.querySelector('.member-name');
+  const leftBtn = document.getElementById('carouselPrevBtn');  // ADDED
+  const rightBtn = document.getElementById('carouselNextBtn'); // ADDED
 
   let currentIndex = 0;
   let isDragging = false;
@@ -39,16 +41,17 @@ function setupCarousel() {
   let prevTranslate = 0;
   let animationID;
 
-  const names = [
-    "55555555555", "6999", "Aldeanos", "Armarouge", "BoaHancock",
-    "Brambleghast", "Charcadet", "Chifune", "Conkdor", "Dachsbun",
-    "DRUGZ", "Eishia", "Gestella", "Hancock", "Heartslabyul",
-    "Hyperdrive", "IronJugulis", "Looters", "Lortelle", "McRib",
-    "Mosts", "MrClean", "MrSatan", "N6M", "Natalinoe",
-    "Pawmo", "Radiru", "Samer", "Shehulk", "Siasha",
-    "Snippets", "Stockholder", "Sylphiette", "Tetona", "Tristeza",
-    "Unfuse", "Westbrook", "Yammy", "YJK", "Zaybi"
-  ];
+const names = [
+  "55555555555", "6999", "Aldeanos", "Armarouge", "BoaHancock",
+  "Brambleghast", "Charcadet", "D4DDY", "Dachsbun", "DRUGZ",
+  "Eishia", "Emancipate", "FixitFelix", "Gestella", "Hancock",
+  "Hyperdrive", "IronJugulis", "Looters", "Lortelle", "McRib",
+  "Mosts", "MrClean", "MrSatan", "N6M", "Natalinoe",
+  "Pawmo", "Radiru", "Samer", "Shehulk", "Siasha",
+  "Snippets", "Stockholder", "Sylphiette", "Tetona", "Tristeza",
+  "Westbrook", "Yammy", "YJK", "Zaybi"
+];
+
 
   function updateCarousel(newIndex) {
     currentIndex = (newIndex + cards.length) % cards.length;
@@ -104,6 +107,10 @@ function setupCarousel() {
   function animation() {
     if (isDragging) requestAnimationFrame(animation);
   }
+
+  // ADD BUTTON FUNCTIONALITY
+  leftBtn.addEventListener("click", () => updateCarousel(currentIndex - 1));
+  rightBtn.addEventListener("click", () => updateCarousel(currentIndex + 1));
 
   updateCarousel(0);
 }
@@ -169,24 +176,17 @@ function setupMusicPlayer() {
     }
   }
 
- function changeSong(newIndex) {
-  pauseCurrentSong();
-  audioElements[currentSongIndex].currentTime = 0;
-  currentSongIndex = (newIndex + songs.length) % songs.length;
-  updateSongDisplay();
-
-  // Update duration and progress bar for new song
-  const currentAudio = audioElements[currentSongIndex];
-  progressBar.max = currentAudio.duration;
-  totalTimeDisplay.textContent = formatTime(currentAudio.duration);
-
-  if (isPlaying) {
-    playCurrentSong();
+  function changeSong(newIndex) {
+    pauseCurrentSong();
+    audioElements[currentSongIndex].currentTime = 0;
+    currentSongIndex = (newIndex + songs.length) % songs.length;
+    updateSongDisplay();
+    const currentAudio = audioElements[currentSongIndex];
+    progressBar.max = currentAudio.duration;
+    totalTimeDisplay.textContent = formatTime(currentAudio.duration);
+    if (isPlaying) playCurrentSong();
   }
-}
 
-
-  // Event Listeners
   playPauseBtn.addEventListener("click", togglePlayPause);
   nextBtn.addEventListener("click", () => changeSong(currentSongIndex + 1));
   prevBtn.addEventListener("click", () => changeSong(currentSongIndex - 1));
@@ -198,7 +198,6 @@ function setupMusicPlayer() {
     changeSong(randomIndex);
   });
 
-  // Update progress bar for current song
   audioElements.forEach((audio, index) => {
     audio.addEventListener("loadedmetadata", () => {
       if (index === currentSongIndex) {
@@ -206,14 +205,12 @@ function setupMusicPlayer() {
         totalTimeDisplay.textContent = formatTime(audio.duration);
       }
     });
-
     audio.addEventListener("timeupdate", () => {
       if (index === currentSongIndex) {
         progressBar.value = audio.currentTime;
         currentTimeDisplay.textContent = formatTime(audio.currentTime);
       }
     });
-
     audio.addEventListener("ended", () => {
       changeSong(currentSongIndex + 1);
     });
