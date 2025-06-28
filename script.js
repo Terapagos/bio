@@ -36,6 +36,7 @@ function setupCarousel() {
   let currentIndex = 0;
   let isDragging = false;
   let autoRotateInterval;
+  let resumeTimeout;
 
   const names = [
     "55555555555", "6999", "Aldeanos", "Armarouge", "BoaHancock",
@@ -66,14 +67,22 @@ function setupCarousel() {
   function startAutoRotate() {
     autoRotateInterval = setInterval(() => {
       updateCarousel(currentIndex + 1);
-    }, 2000); // rotate every 2 seconds
+    }, 2000);
   }
 
   function stopAutoRotate() {
     clearInterval(autoRotateInterval);
   }
 
-  // --- Existing drag logic ---
+  function pauseAndResumeAutoRotate() {
+    stopAutoRotate();
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(() => {
+      startAutoRotate();
+    }, 3000); // resume after 3 seconds
+  }
+
+  // --- Drag logic ---
   track.addEventListener('mousedown', startDrag);
   track.addEventListener('touchstart', startDrag);
   track.addEventListener('mousemove', drag);
@@ -91,6 +100,7 @@ function setupCarousel() {
     isDragging = true;
     startPos = getPositionX(e);
     animationID = requestAnimationFrame(animation);
+    pauseAndResumeAutoRotate();
   }
 
   function drag(e) {
@@ -121,8 +131,15 @@ function setupCarousel() {
 
   // --- End of drag logic ---
 
-  leftBtn.addEventListener("click", () => updateCarousel(currentIndex - 1));
-  rightBtn.addEventListener("click", () => updateCarousel(currentIndex + 1));
+  leftBtn.addEventListener("click", () => {
+    updateCarousel(currentIndex - 1);
+    pauseAndResumeAutoRotate();
+  });
+
+  rightBtn.addEventListener("click", () => {
+    updateCarousel(currentIndex + 1);
+    pauseAndResumeAutoRotate();
+  });
 
   updateCarousel(0);
   startAutoRotate();
