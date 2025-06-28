@@ -27,7 +27,6 @@ async function fetchKenmeiActivity() {
 
 // --- Carousel Logic ---
 function setupCarousel() {
-  const carousel = document.querySelector('.carousel-container');
   const track = document.querySelector('.carousel-track');
   const cards = document.querySelectorAll('.card');
   const memberName = document.querySelector('.member-name');
@@ -67,28 +66,14 @@ function setupCarousel() {
   function startAutoRotate() {
     autoRotateInterval = setInterval(() => {
       updateCarousel(currentIndex + 1);
-    }, 2000); // change every 2 seconds
+    }, 2000); // rotate every 2 seconds
   }
 
   function stopAutoRotate() {
     clearInterval(autoRotateInterval);
   }
 
-  function userInteraction() {
-    stopAutoRotate();
-    track.removeEventListener('mousedown', userInteraction);
-    track.removeEventListener('touchstart', userInteraction);
-    leftBtn.removeEventListener('click', userInteraction);
-    rightBtn.removeEventListener('click', userInteraction);
-  }
-
-  // Listen for user interactions to stop auto-rotation
-  track.addEventListener('mousedown', userInteraction);
-  track.addEventListener('touchstart', userInteraction);
-  leftBtn.addEventListener('click', userInteraction);
-  rightBtn.addEventListener('click', userInteraction);
-
-  // Existing drag logic (kept as is)
+  // --- Existing drag logic ---
   track.addEventListener('mousedown', startDrag);
   track.addEventListener('touchstart', startDrag);
   track.addEventListener('mousemove', drag);
@@ -133,6 +118,8 @@ function setupCarousel() {
   function animation() {
     if (isDragging) requestAnimationFrame(animation);
   }
+
+  // --- End of drag logic ---
 
   leftBtn.addEventListener("click", () => updateCarousel(currentIndex - 1));
   rightBtn.addEventListener("click", () => updateCarousel(currentIndex + 1));
