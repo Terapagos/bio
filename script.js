@@ -31,27 +31,23 @@ function setupCarousel() {
   const track = document.querySelector('.carousel-track');
   const cards = document.querySelectorAll('.card');
   const memberName = document.querySelector('.member-name');
-  const leftBtn = document.getElementById('carouselPrevBtn');  // ADDED
-  const rightBtn = document.getElementById('carouselNextBtn'); // ADDED
+  const leftBtn = document.getElementById('carouselPrevBtn');
+  const rightBtn = document.getElementById('carouselNextBtn');
 
   let currentIndex = 0;
   let isDragging = false;
-  let startPos = 0;
-  let currentTranslate = 0;
-  let prevTranslate = 0;
-  let animationID;
+  let autoRotateInterval;
 
-const names = [
-  "55555555555", "6999", "Aldeanos", "Armarouge", "BoaHancock",
-  "Brambleghast", "Charcadet", "D4DDY", "Dachsbun", "DRUGZ",
-  "Eishia", "Emancipate", "FixitFelix", "Gestella", "Hancock",
-  "Hyperdrive", "IronJugulis", "Looters", "Lortelle", "McRib",
-  "Mosts", "MrClean", "MrSatan", "N6M", "Natalinoe",
-  "Pawmo", "Radiru", "Samer", "Shehulk", "Siasha",
-  "Snippets", "Stockholder", "Sylphiette", "Tetona", "Tristeza",
-  "Westbrook", "Yammy", "YJK", "Zaybi"
-];
-
+  const names = [
+    "55555555555", "6999", "Aldeanos", "Armarouge", "BoaHancock",
+    "Brambleghast", "Charcadet", "D4DDY", "Dachsbun", "DRUGZ",
+    "Eishia", "Emancipate", "FixitFelix", "Gestella", "Hancock",
+    "Hyperdrive", "IronJugulis", "Looters", "Lortelle", "McRib",
+    "Mosts", "MrClean", "MrSatan", "N6M", "Natalinoe",
+    "Pawmo", "Radiru", "Samer", "Shehulk", "Siasha",
+    "Snippets", "Stockholder", "Sylphiette", "Tetona", "Tristeza",
+    "Westbrook", "Yammy", "YJK", "Zaybi"
+  ];
 
   function updateCarousel(newIndex) {
     currentIndex = (newIndex + cards.length) % cards.length;
@@ -68,6 +64,31 @@ const names = [
     memberName.textContent = names[currentIndex];
   }
 
+  function startAutoRotate() {
+    autoRotateInterval = setInterval(() => {
+      updateCarousel(currentIndex + 1);
+    }, 2000); // change every 2 seconds
+  }
+
+  function stopAutoRotate() {
+    clearInterval(autoRotateInterval);
+  }
+
+  function userInteraction() {
+    stopAutoRotate();
+    track.removeEventListener('mousedown', userInteraction);
+    track.removeEventListener('touchstart', userInteraction);
+    leftBtn.removeEventListener('click', userInteraction);
+    rightBtn.removeEventListener('click', userInteraction);
+  }
+
+  // Listen for user interactions to stop auto-rotation
+  track.addEventListener('mousedown', userInteraction);
+  track.addEventListener('touchstart', userInteraction);
+  leftBtn.addEventListener('click', userInteraction);
+  rightBtn.addEventListener('click', userInteraction);
+
+  // Existing drag logic (kept as is)
   track.addEventListener('mousedown', startDrag);
   track.addEventListener('touchstart', startDrag);
   track.addEventListener('mousemove', drag);
@@ -75,6 +96,11 @@ const names = [
   track.addEventListener('mouseup', endDrag);
   track.addEventListener('mouseleave', endDrag);
   track.addEventListener('touchend', endDrag);
+
+  let startPos = 0;
+  let currentTranslate = 0;
+  let prevTranslate = 0;
+  let animationID;
 
   function startDrag(e) {
     isDragging = true;
@@ -108,11 +134,11 @@ const names = [
     if (isDragging) requestAnimationFrame(animation);
   }
 
-  // ADD BUTTON FUNCTIONALITY
   leftBtn.addEventListener("click", () => updateCarousel(currentIndex - 1));
   rightBtn.addEventListener("click", () => updateCarousel(currentIndex + 1));
 
   updateCarousel(0);
+  startAutoRotate();
 }
 
 // --- Mini Music Player Logic ---
