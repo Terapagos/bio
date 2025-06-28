@@ -2,7 +2,7 @@
 async function fetchKenmeiActivity() {
   const activityFeed = document.getElementById('activity-feed');
   try {
-    const response = await fetch('https://40d538ba-3c5f-4319-86e0-307c24da2c59-00-2ariedr1c85ip.worf.replit.dev/get-activity');
+    const response = await fetch('https://bio-backend.fly.dev/get-activity');
     if (!response.ok) throw new Error('Network response was not ok');
     const activities = await response.json();
     if (!activities?.length) {
