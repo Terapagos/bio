@@ -253,8 +253,11 @@ h1, h2 {
 }
 
 .member-info {
+  position: absolute;
+  bottom: -40px; /* adjust: smaller value moves it closer to card */
+  width: 100%;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 0;
 }
 
 .member-name {
