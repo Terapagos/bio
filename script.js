@@ -160,6 +160,7 @@ function setupMusicPlayer() {
   const songs = [
     { title: "Heroic Desire", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/heroic%20desire.mp3" },
     { title: "Interia", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/Interia.mp3" },
+    { title: "Eternity", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/Eternity.mp3" },
     { title: "The Line", url: "https://github.com/q7XvR9f4MZnA2pLWtk3bEoJqVHgYcK5dTRX8LUz/music/raw/main/The%20Line.mp3" }
   ];
 
