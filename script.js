@@ -44,7 +44,7 @@ function setupCarousel() {
     "Eishia", "FixitFelix", "Gestella", "Hancock",
      "IronJugulis", "Looters", "McRib",
     "Mosts", "MrClean", "MrSatan", "N6M",
-    "Pawmo", "Samer", "Shehulk", "Siasha",
+    "Pawmo", "Samer", "Shehulk",
      "Sylphiette", "Tetona", "Tristeza",
     "Westbrook", "Yammy", "YJK", "Zaybi"
   ];
