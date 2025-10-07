@@ -40,12 +40,12 @@ function setupCarousel() {
 
   const names = [
     "55555555555", "6999", "Aldeanos", "Armarouge", "BoaHancock",
-    "Brambleghast", "Charcadet", "D4DDY", "Dachsbun", "DRUGZ",
-    "Eishia", "Emancipate", "FixitFelix", "Gestella", "Hancock",
-    "Hyperdrive", "IronJugulis", "Looters", "Lortelle", "McRib",
-    "Mosts", "MrClean", "MrSatan", "N6M", "Natalinoe",
-    "Pawmo", "Radiru", "Samer", "Shehulk", "Siasha",
-    "Snippets", "Stockholder", "Sylphiette", "Tetona", "Tristeza",
+    "Brambleghast", "Charcadet", "Dachsbun", "DRUGZ",
+    "Eishia", "FixitFelix", "Gestella", "Hancock",
+     "IronJugulis", "Looters", "McRib",
+    "Mosts", "MrClean", "MrSatan", "N6M",
+    "Pawmo", "Samer", "Shehulk", "Siasha",
+     "Sylphiette", "Tetona", "Tristeza",
     "Westbrook", "Yammy", "YJK", "Zaybi"
   ];
 
