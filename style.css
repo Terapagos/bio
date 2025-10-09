@@ -1,31 +1,26 @@
-/* Background */
+/* Fullscreen Background */
 .page-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;      
-  height: 100vh;     
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   z-index: -1;
 }
 
-.page-overlay::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover; /* ensures full coverage */
-  z-index: -1;
+.page-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* General Layout */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #000; /* fallback */
-  color: #fff;
+  background-color: #f9f8f6;
 }
 
 .container {
@@ -38,6 +33,7 @@ body {
 h1, h2 {
   text-align: center;
   color: #fff;
+  text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
 }
 
 /* Profile Section */
@@ -50,7 +46,6 @@ h1, h2 {
 
 .profile-box {
   position: relative;
-  border: 2px solid transparent;
   border-radius: 10px;
   padding: 20px;
   text-align: center;
@@ -85,12 +80,13 @@ h1, h2 {
 .profile-info {
   font-size: 1.5rem;
   text-align: left;
+  color: #fff;
 }
 
-/* Social Media */
+/* Social Media Links */
 .social-media-links {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
   gap: 10px;
   margin-top: 10px;
   justify-items: center;
@@ -118,7 +114,7 @@ h1, h2 {
   left: 50%;
   transform: translateX(-50%) translateY(-8px);
   padding: 5px 10px;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0,0,0,0.8);
   color: #fff;
   font-size: 14px;
   border-radius: 5px;
@@ -133,10 +129,6 @@ h1, h2 {
   visibility: visible;
 }
 
-.social-media-links a:nth-child(n+17) {
-  display: none;
-}
-
 /* Activity Section */
 .recent-activity h2 {
   margin-bottom: 20px;
@@ -144,59 +136,15 @@ h1, h2 {
 
 .activity {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
   padding: 15px;
 }
 
-.activity-status {
-  font-size: 14px;
-  margin-top: 5px;
-  color: #ffbc00;
-  text-shadow: none;
-}
-
-.activity-card {
-  position: relative;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
-  background: transparent;
-  --list: #ffbc00, #ff0058;
-  --grad: linear-gradient(45deg, var(--list));
-  background: conic-gradient(rgba(0,0,0,0.5) 0 0) padding-box, var(--grad) border-box;
-}
-
-.activity-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--grad);
-  filter: blur(0.75em);
-  border-radius: 8px;
-}
-
-.activity-card img {
-  width: 100%;
-  height: 120px;
-  object-fit: contain;
-}
-
-.activity-card h3 {
-  font-size: 14px;
-  margin: 8px 0 4px;
-}
-
-.activity-card p {
-  font-size: 12px;
-  margin: 0;
-}
-
-/* Music Player */
+/* Music player */
 .mini-music-player {
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
   height: 60px;
   margin-top: 10px;
   padding: 8px;
@@ -225,7 +173,6 @@ h1, h2 {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-bottom: 4px;
 }
 
 .mini-controls i, .mini-controls button {
@@ -264,25 +211,4 @@ h1, h2 {
 
 #currentTime, #totalTime {
   font-size: 10px;
-}
-
-/* Text Shadows */
-h1, h2, .member-name, .profile-info b {
-  text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
-  color: #fff;
-}
-
-/* Responsive Fix for Mobile */
-@media screen and (max-width: 768px) {
-  .profile {
-    flex-direction: column;
-    gap: 20px;
-  }
-  .social-media-links {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  .mini-music-player {
-    width: 90%;
-  }
 }
