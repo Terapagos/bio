@@ -1,11 +1,18 @@
-/* Background */
+/* Fullscreen background that scales properly on all devices */
 .page-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg') center/cover no-repeat;
-  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100vw;         /* always full viewport width */
+  height: 100vh;        /* always full viewport height */
+  background-image: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg');
+  background-position: center center; /* center image */
+  background-repeat: no-repeat;
+  background-size: cover; /* ensures full coverage */
+  background-attachment: fixed; /* optional – keeps it still when scrolling */
+  z-index: -1; /* keeps it behind all other content */
 }
+
 
 /* General Layout */
 body {
