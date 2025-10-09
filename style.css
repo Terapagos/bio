@@ -1,19 +1,17 @@
-/* ✅ Ensure full-screen coverage */
+/* Reset + Full Background */
 html, body {
   height: 100%;
-  width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #f9f8f6;
   overflow-x: hidden;
+  background: transparent;
 }
 
-/* Background */
+/* Background Image */
 .page-overlay {
   position: fixed;
   top: 0; left: 0;
-  width: 100%;
-  height: 100vh; /* ✅ ensures fills the mobile viewport */
+  width: 100%; height: 100%;
   background: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg') center/cover no-repeat;
   z-index: -1;
 }
@@ -21,8 +19,10 @@ html, body {
 /* General Layout */
 body {
   font-family: Arial, sans-serif;
+  color: #fff;
 }
 
+/* Container */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -30,9 +30,11 @@ body {
   padding: 20px;
 }
 
-h1, h2 {
+/* Headings */
+h1, h2, .member-name, .profile-info b {
+  text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
+  color: #fff;
   text-align: center;
-  color: #000;
 }
 
 /* Profile Section */
@@ -85,15 +87,15 @@ h1, h2 {
 /* Social Media */
 .social-media-links {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
   justify-items: center;
 }
 
 .social-icon {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -128,10 +130,6 @@ h1, h2 {
   visibility: visible;
 }
 
-.social-media-links a:nth-child(n+17) {
-  display: none;
-}
-
 /* Activity Section */
 .recent-activity h2 {
   margin-bottom: 20px;
@@ -139,16 +137,9 @@ h1, h2 {
 
 .activity {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
   padding: 15px;
-}
-
-.activity-status {
-  font-size: 14px;
-  margin-top: 5px;
-  color: #ffbc00;
-  text-shadow: none;
 }
 
 .activity-card {
@@ -189,89 +180,10 @@ h1, h2 {
   margin: 0;
 }
 
-/* Music Player */
-.mini-music-player {
-  width: 350px;
-  height: 60px;
-  margin-top: 10px;
-  padding: 8px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: #fff;
-  font-family: 'Nunito', sans-serif;
-  font-size: 12px;
-}
-
-.song-title {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 4px;
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.mini-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-
-.mini-controls i, .mini-controls button {
+.activity-status {
   font-size: 14px;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
+  margin-top: 5px;
+  color: #ffbc00;
+  text-shadow: none;
 }
 
-.mini-progress {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-#progressBar {
-  width: 100px;
-  height: 3px;
-  border-radius: 4px;
-  background: #888;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-#progressBar::-webkit-slider-thumb {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: white;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
-}
-
-#currentTime, #totalTime {
-  font-size: 10px;
-}
-
-/* Text Glow */
-h1, h2, .member-name, .profile-info b {
-  text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
-  color: #fff;
-}
-
-/* ✅ Mobile Fixes */
-@media (max-width: 768px) {
-  .profile {
-    flex-direction: column;
-    text-align: center;
-  }
-
- 
