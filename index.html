@@ -8,10 +8,9 @@
   <meta property="og:image" content="https://r2.e-z.host/3eba238d-bb8e-4137-b17a-4548203a42d4/e9zewp6w.png" />
   <meta property="og:url" content="https://dat.place" />
   <meta property="og:type" content="website" />
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
-    /* Full height for html & body */
     html, body {
       height: 100%;
       margin: 0;
@@ -19,7 +18,6 @@
       background: transparent;
     }
 
-    /* Background overlay */
     .page-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -28,7 +26,6 @@
       z-index: -1;
     }
 
-    /* General Layout */
     .container {
       width: 100%;
       max-width: 1200px;
@@ -38,10 +35,10 @@
 
     h1, h2 {
       text-align: center;
-      color: #000;
+      color: #fff;
+      text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
     }
 
-    /* Profile Section */
     .profile-section {
       display: flex;
       justify-content: center;
@@ -88,7 +85,6 @@
       text-align: left;
     }
 
-    /* Social Media */
     .social-media-links {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
@@ -134,11 +130,6 @@
       visibility: visible;
     }
 
-    .social-media-links a:nth-child(n+17) {
-      display: none;
-    }
-
-    /* Activity Section */
     .recent-activity h2 {
       margin-bottom: 20px;
     }
@@ -195,12 +186,6 @@
       margin: 0;
     }
 
-    h1, h2, .member-name, .profile-info b {
-      text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
-      color: #fff;
-    }
-
-    /* Mini Music Player */
     .mini-music-player {
       width: 350px;
       height: 60px;
@@ -279,15 +264,105 @@
   <div class="page-overlay"></div>
 
   <!-- Profile Section -->
-  <!-- (Your existing profile HTML goes here, unchanged) -->
+  <section class="profile-section">
+    <div class="profile-box">
+      <div class="profile">
+        <img src="https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/6CDFG4AYNPO7/4a2f30ef-af98-409c-9bd2-664c20db39e0/IMG_6148.jpeg" alt="Main Account Avatar" class="profile-img">
+        <div class="profile-info">
+          <b>Dat</b>
+          <div id="activity-status" class="activity-status">Loading...</div>
+
+          <!-- Social Media -->
+          <div class="social-media-links">
+            <a href="https://twitter.com/charcadet" target="_blank" class="social-link" data-tooltip="@charcadet">
+              <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0b/4b/51/0b4b51bc-ddaf-4383-6a8f-897120d26513/ProductionAppIcon-0-0-1x_U007emarketing-0-8-0-0-0-85-220.png/230x0w.webp" alt="Twitter" class="social-icon">
+            </a>
+            <a href="https://www.reddit.com/user/charcadet" target="_blank" class="social-link" data-tooltip="@charcadet">
+              <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/37/19/58/371958bf-5117-fa9f-7399-459d15cd68d5/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/230x0w.webp" alt="Reddit" class="social-icon">
+            </a>
+            <a href="https://www.instagram.com/charcadet/" target="_blank" class="social-link" data-tooltip="@charcadet">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram" class="social-icon">
+            </a>
+            <a href="https://pokemmo.eu/" target="_blank" class="social-link" data-tooltip="@samurai">
+              <img src="https://img.utdstc.com/icon/2b2/a07/2b2a079a18ba4254bcf49fba2541e4b94cc44e93e95a800e23257dc9e739c961:200" class="social-icon">
+            </a>
+            <a href="https://lolchess.gg/profile/na/Dat-tft/" target="_blank" class="social-link" data-tooltip="@Dat#tft">
+              <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/e9/b7/7b/e9b77be1-51f7-923d-99ae-12b8c3b89707/AppIcon-0-0-1x_U007epad-0-1-85-220.png/230x0w.webp" alt="TFT" class="social-icon">
+            </a>
+            <a href="https://namemc.com/profile/MrClean/" target="_blank" class="social-link" data-tooltip="@MrClean">
+              <img src="https://pbs.twimg.com/profile_images/1596956295990583296/nS_HkfAq_400x400.jpg" alt="Minecraft" class="social-icon">
+            </a>
+            <a href="https://discord.com" target="_blank" class="social-link" data-tooltip="@d6t">
+              <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxsG72wAo9EWJR4yQWyJJaDaK1XdUso6cUMpI9hAdPUU_FNs11cY1X284vsHrnWtRw7oqRpN1m9YAg21d_aNKnIo-&format=source" alt="Discord" class="social-icon">
+            </a>
+            <a href="https://artcollectorapp.net" target="_blank" class="social-link" data-tooltip="@god">
+              <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/44/04/17/440417f1-6ea7-f60a-f396-fb9674b868fc/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/230x0w.webp" alt="Art Collector" class="social-icon">
+            </a>
+            <a href="https://www.kenmei.co/user/Dat" target="_blank" class="social-link" data-tooltip="@Dat">
+              <img src="https://cdn-1.webcatalog.io/catalog/kenmei/kenmei-icon-filled-256.webp?v=1714777132680" alt="Kenmei" class="social-icon">
+            </a>
+            <a href="https://www.Twitch.tv/Charcadet" target="_blank" class="social-link" data-tooltip="@Charcadet">
+              <img src="https://play-lh.googleusercontent.com/Y6epalNGUKPgWyQpDCgVL621EgmOmXBWfQoJdaM8v0irKWEII5bEDvpaWp7Mey2MVg=w240-h480-rw" alt="Twitch" class="social-icon">
+            </a>
+            <a href="https://tcgpocket.pokemon.com/en-us/" target="_blank" class="social-link" data-tooltip="@7854-1541-7726-6695">
+              <img src="https://play-lh.googleusercontent.com/CMYCz0j2Dowf_VUybvX00u5TGGkAJp2pGMrYxJcp85L91kou9fGICYcWnb8Pyr1xcQ" alt="TCG Pocket" class="social-icon">
+            </a>
+            <a href="https://steamcommunity.com/id/Terapagos/" target="_blank" class="social-link" data-tooltip="@Terapagos">
+              <img src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA=w240-h480" alt="Steam" class="social-icon">
+            </a>
+            <a href="https://epicgames.com" target="_blank" class="social-link" data-tooltip="@Pecharunt">
+              <img src="https://img.icons8.com/ios7/600/epic-games.png" alt="Epic Games" class="social-icon">
+            </a>
+            <a href="https://vgen.co/x/" target="_blank" class="social-link" data-tooltip="@X">
+              <img src="https://pbs.twimg.com/profile_images/1583541856960479260/4jQznF3H_400x400.png" alt="Vgen" class="social-icon">
+            </a>
+            <a href="https://www.youtube.com/@Armarouge" target="_blank" class="social-link" data-tooltip="@Armarouge">
+              <img src="https://play-lh.googleusercontent.com/6am0i3walYwNLc08QOOhRJttQENNGkhlKajXSERf3JnPVRQczIyxw2w3DxeMRTOSdsY=s48" alt="Youtube" class="social-icon">
+            </a>
+            <a href="https://www.tiktok.com/@ogerpon" target="_blank" class="social-link" data-tooltip="@Ogerpon">
+              <img src="https://play-lh.googleusercontent.com/BmUViDVOKNJe0GYJe22hsr7juFndRVbvr1fGmHGXqHfJjNAXjd26bfuGRQpVrpJ6YbA=w240-h480" alt="TikTok" class="social-icon">
+            </a>
+          </div>
+
+          <!-- Music Player -->
+          <div class="mini-music-player">
+            <audio id="audioPlayer"></audio>
+            <div id="songTitle" class="song-title">Heroic Desire</div>
+            <div class="mini-controls">
+              <i class="fa-solid fa-shuffle" id="shuffleBtn"></i>
+              <i class="fa-solid fa-backward" id="prevBtn"></i>
+              <button id="playPauseBtn">
+                <i class="fa-solid fa-play" id="playPauseIcon"></i>
+              </button>
+              <i class="fa-solid fa-forward" id="nextBtn"></i>
+            </div>
+            <div class="mini-progress">
+              <span id="currentTime">0:00</span>
+              <input type="range" value="0" id="progressBar" />
+              <span id="totalTime">0:00</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Activity -->
+  <section class="recent-activity">
+    <h2>Recent Activity</h2>
+    <div id="activity-feed" class="activity">
+      <p>Loading recent activity...</p>
+    </div>
+  </section>
 
 </div>
 
 <script src="script.js"></script>
 <script>
   const timestamp = Date.now();
-  document.querySelector('link[href="style.css"]').href = "style.css?v=" + timestamp;
   document.querySelector('script[src="script.js"]').src = "script.js?v=" + timestamp;
 </script>
+
 </body>
 </html>
