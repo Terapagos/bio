@@ -1,10 +1,31 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000; /* fallback */
+  overflow-x: hidden;
+}
+
 /* Background */
 .page-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg') center/cover no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* ensures it moves when you scroll */
   z-index: -1;
+}
+
+/* Make sure your content sits above it */
+.main-content {
+  position: relative;
+  z-index: 1;
 }
 
 /* General Layout */
