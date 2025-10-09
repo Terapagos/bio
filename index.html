@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,7 +13,10 @@
 <body>
 
 <div class="container">
-  <div class="page-overlay"></div>
+  <!-- Background -->
+  <div class="page-overlay">
+    <img src="https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg" alt="Background">
+  </div>
 
   <!-- Profile Section -->
   <section class="profile-section">
@@ -22,6 +26,8 @@
         <div class="profile-info">
           <b>Dat</b>
           <div id="activity-status" class="activity-status">Loading...</div>
+
+          <!-- Social Links -->
           <div class="social-media-links">
             <a href="https://twitter.com/charcadet" target="_blank" class="social-link" data-tooltip="@charcadet">
               <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0b/4b/51/0b4b51bc-ddaf-4383-6a8f-897120d26513/ProductionAppIcon-0-0-1x_U007emarketing-0-8-0-0-0-85-220.png/230x0w.webp" alt="Twitter" class="social-icon">
@@ -56,19 +62,19 @@
             <a href="https://tcgpocket.pokemon.com/en-us/" target="_blank" class="social-link" data-tooltip="@7854-1541-7726-6695">
               <img src="https://play-lh.googleusercontent.com/CMYCz0j2Dowf_VUybvX00u5TGGkAJp2pGMrYxJcp85L91kou9fGICYcWnb8Pyr1xcQ" alt="TCG Pocket" class="social-icon">
             </a>
-                        <a href="https://steamcommunity.com/id/Terapagos/" target="_blank" class="social-link" data-tooltip="@Terapagos">
+            <a href="https://steamcommunity.com/id/Terapagos/" target="_blank" class="social-link" data-tooltip="@Terapagos">
               <img src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA=w240-h480" alt="Steam" class="social-icon">
             </a>
-                                    <a href="https://epicgames.com" target="_blank" class="social-link" data-tooltip="@Pecharunt">
+            <a href="https://epicgames.com" target="_blank" class="social-link" data-tooltip="@Pecharunt">
               <img src="https://img.icons8.com/ios7/600/epic-games.png" alt="Epic Games" class="social-icon">
             </a>
-                                    <a href="https://vgen.co/x/" target="_blank" class="social-link" data-tooltip="@X">
+            <a href="https://vgen.co/x/" target="_blank" class="social-link" data-tooltip="@X">
               <img src="https://pbs.twimg.com/profile_images/1583541856960479260/4jQznF3H_400x400.png" alt="Vgen" class="social-icon">
             </a>
-                                    <a href="https://www.youtube.com/@Armarouge" target="_blank" class="social-link" data-tooltip="@Armarouge">
+            <a href="https://www.youtube.com/@Armarouge" target="_blank" class="social-link" data-tooltip="@Armarouge">
               <img src="https://play-lh.googleusercontent.com/6am0i3walYwNLc08QOOhRJttQENNGkhlKajXSERf3JnPVRQczIyxw2w3DxeMRTOSdsY=s48" alt="Youtube" class="social-icon">
             </a>
-                                    <a href="https://www.tiktok.com/@ogerpon" target="_blank" class="social-link" data-tooltip="@Ogerpon">
+            <a href="https://www.tiktok.com/@ogerpon" target="_blank" class="social-link" data-tooltip="@Ogerpon">
               <img src="https://play-lh.googleusercontent.com/BmUViDVOKNJe0GYJe22hsr7juFndRVbvr1fGmHGXqHfJjNAXjd26bfuGRQpVrpJ6YbA=w240-h480" alt="Twitch" class="social-icon">
             </a>
           </div>
@@ -105,13 +111,11 @@
     </div>
   </section>
 
-    </div>
-  </div>
 </div>
 
 <script src="script.js"></script>
 
-<!-- ✅ Automatic cache busting script -->
+<!-- Automatic cache busting -->
 <script>
   const timestamp = Date.now();
   document.querySelector('link[href="style.css"]').href = "style.css?v=" + timestamp;
