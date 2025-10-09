@@ -2,261 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dat Bio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dat Bio</title>
   <meta property="og:title" content="Dat" />
   <meta property="og:image" content="https://r2.e-z.host/3eba238d-bb8e-4137-b17a-4548203a42d4/e9zewp6w.png" />
   <meta property="og:url" content="https://dat.place" />
   <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: transparent;
-    }
-
-    .page-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg') center/cover no-repeat;
-      z-index: -1;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #fff;
-      text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
-    }
-
-    .profile-section {
-      display: flex;
-      justify-content: center;
-      padding: 40px;
-      margin-bottom: 40px;
-    }
-
-    .profile-box {
-      position: relative;
-      border: 2px solid transparent;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      background: transparent;
-      --list: #ffbc00, #ff0058;
-      --grad: linear-gradient(45deg, var(--list));
-      background: conic-gradient(rgba(0,0,0,0.5) 0 0) padding-box, var(--grad) border-box;
-    }
-
-    .profile-box::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: var(--grad);
-      filter: blur(0.75em);
-      border-radius: 10px;
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .profile img {
-      border-radius: 8px;
-      max-width: 150px;
-      border: 2px solid #000;
-    }
-
-    .profile-info {
-      font-size: 1.5rem;
-      text-align: left;
-    }
-
-    .social-media-links {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 10px;
-      margin-top: 10px;
-      justify-items: center;
-    }
-
-    .social-icon {
-      width: 30px;
-      height: 30px;
-      object-fit: contain;
-      transition: transform 0.3s ease;
-    }
-
-    .social-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .social-link {
-      position: relative;
-    }
-
-    .social-link::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-8px);
-      padding: 5px 10px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      font-size: 14px;
-      border-radius: 5px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-    }
-
-    .social-link:hover::after {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .recent-activity h2 {
-      margin-bottom: 20px;
-    }
-
-    .activity {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      padding: 15px;
-    }
-
-    .activity-status {
-      font-size: 14px;
-      margin-top: 5px;
-      color: #ffbc00;
-      text-shadow: none;
-    }
-
-    .activity-card {
-      position: relative;
-      border: 2px solid transparent;
-      border-radius: 8px;
-      padding: 12px;
-      text-align: center;
-      background: transparent;
-      --list: #ffbc00, #ff0058;
-      --grad: linear-gradient(45deg, var(--list));
-      background: conic-gradient(rgba(0,0,0,0.5) 0 0) padding-box, var(--grad) border-box;
-    }
-
-    .activity-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: var(--grad);
-      filter: blur(0.75em);
-      border-radius: 8px;
-    }
-
-    .activity-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: contain;
-    }
-
-    .activity-card h3 {
-      font-size: 14px;
-      margin: 8px 0 4px;
-    }
-
-    .activity-card p {
-      font-size: 12px;
-      margin: 0;
-    }
-
-    .mini-music-player {
-      width: 350px;
-      height: 60px;
-      margin-top: 10px;
-      padding: 8px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: #fff;
-      font-family: 'Nunito', sans-serif;
-      font-size: 12px;
-    }
-
-    .song-title {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 4px;
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .mini-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 4px;
-    }
-
-    .mini-controls i, .mini-controls button {
-      font-size: 14px;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    .mini-progress {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-
-    #progressBar {
-      width: 100px;
-      height: 3px;
-      border-radius: 4px;
-      background: #888;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    #progressBar::-webkit-slider-thumb {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: white;
-      -webkit-appearance: none;
-      appearance: none;
-      cursor: pointer;
-    }
-
-    #currentTime, #totalTime {
-      font-size: 10px;
-    }
-  </style>
 </head>
 <body>
 
@@ -272,7 +25,7 @@
           <b>Dat</b>
           <div id="activity-status" class="activity-status">Loading...</div>
 
-          <!-- Social Media -->
+          <!-- Social Media Links -->
           <div class="social-media-links">
             <a href="https://twitter.com/charcadet" target="_blank" class="social-link" data-tooltip="@charcadet">
               <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0b/4b/51/0b4b51bc-ddaf-4383-6a8f-897120d26513/ProductionAppIcon-0-0-1x_U007emarketing-0-8-0-0-0-85-220.png/230x0w.webp" alt="Twitter" class="social-icon">
@@ -284,7 +37,7 @@
               <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram" class="social-icon">
             </a>
             <a href="https://pokemmo.eu/" target="_blank" class="social-link" data-tooltip="@samurai">
-              <img src="https://img.utdstc.com/icon/2b2/a07/2b2a079a18ba4254bcf49fba2541e4b94cc44e93e95a800e23257dc9e739c961:200" class="social-icon">
+              <img src="https://img.utdstc.com/icon/2b2/a07/2b2a079a18ba4254bcf49fba2541e4b94cc44e93e95a800e23257dc9e739c961:200" alt="Pokemmo" class="social-icon">
             </a>
             <a href="https://lolchess.gg/profile/na/Dat-tft/" target="_blank" class="social-link" data-tooltip="@Dat#tft">
               <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/e9/b7/7b/e9b77be1-51f7-923d-99ae-12b8c3b89707/AppIcon-0-0-1x_U007epad-0-1-85-220.png/230x0w.webp" alt="TFT" class="social-icon">
@@ -308,7 +61,7 @@
               <img src="https://play-lh.googleusercontent.com/CMYCz0j2Dowf_VUybvX00u5TGGkAJp2pGMrYxJcp85L91kou9fGICYcWnb8Pyr1xcQ" alt="TCG Pocket" class="social-icon">
             </a>
             <a href="https://steamcommunity.com/id/Terapagos/" target="_blank" class="social-link" data-tooltip="@Terapagos">
-              <img src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8kM-LD6l5u6cGm_1-GsoQ_IyWFHdbkA=w240-h480" alt="Steam" class="social-icon">
+              <img src="https://play-lh.googleusercontent.com/52_DMY5417awaEgJf3_9mWgEuO2t1JfkGab8l5u6cGm_1-GsoQ_IyWFHdbkA=w240-h480" alt="Steam" class="social-icon">
             </a>
             <a href="https://epicgames.com" target="_blank" class="social-link" data-tooltip="@Pecharunt">
               <img src="https://img.icons8.com/ios7/600/epic-games.png" alt="Epic Games" class="social-icon">
@@ -320,7 +73,7 @@
               <img src="https://play-lh.googleusercontent.com/6am0i3walYwNLc08QOOhRJttQENNGkhlKajXSERf3JnPVRQczIyxw2w3DxeMRTOSdsY=s48" alt="Youtube" class="social-icon">
             </a>
             <a href="https://www.tiktok.com/@ogerpon" target="_blank" class="social-link" data-tooltip="@Ogerpon">
-              <img src="https://play-lh.googleusercontent.com/BmUViDVOKNJe0GYJe22hsr7juFndRVbvr1fGmHGXqHfJjNAXjd26bfuGRQpVrpJ6YbA=w240-h480" alt="TikTok" class="social-icon">
+              <img src="https://play-lh.googleusercontent.com/BmUViDVOKNJe0GYJe22hsr7juFndRVbvr1fGmHGXqHfJjNAXjd26bfuGRQpVrpJ6YbA=w240-h480" alt="Tiktok" class="social-icon">
             </a>
           </div>
 
@@ -356,13 +109,14 @@
     </div>
   </section>
 
-</div>
-
 <script src="script.js"></script>
+
 <script>
   const timestamp = Date.now();
+  document.querySelector('link[href="style.css"]').href = "style.css?v=" + timestamp;
   document.querySelector('script[src="script.js"]').src = "script.js?v=" + timestamp;
 </script>
 
 </body>
 </html>
+
