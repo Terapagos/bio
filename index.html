@@ -108,7 +108,16 @@
   
 <script src="script.js"></script>
 
-<!-- ✅ Automatic cache busting script -->
+  <!-- Recent Activity -->
+  <section class="recent-activity">
+    <h2>Recent Activity</h2>
+    <div id="activity-feed" class="activity">
+      <p>Loading recent activity...</p>
+    </div>
+  </section>
+
+<script src="script.js"></script>
+
 <script>
   const timestamp = Date.now();
   document.querySelector('link[href="style.css"]').href = "style.css?v=" + timestamp;
