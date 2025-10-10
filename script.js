@@ -172,6 +172,5 @@ fetchLanyardStatus();
 // --- Initialize everything ---
 document.addEventListener('DOMContentLoaded', () => {
   fetchKenmeiActivity();
-  setupCarousel();
   setupMusicPlayer();
 });
