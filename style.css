@@ -1,17 +1,28 @@
 /* Background */
 .page-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg') center/cover no-repeat;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('https://storage.googleapis.com/vgen-production-storage/uploads/fe276cf1-bf88-40e8-88a6-1ae021d274f7/final-delivery/GUUD2IFL8S4R/ffd427a0-06fa-45b5-bff6-f8dc5b4626f2/IMG_5647.jpeg') center center / cover no-repeat;
   z-index: -1;
+  pointer-events: none;
 }
 
 /* General Layout */
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
   font-family: Arial, sans-serif;
-  background-color: #f9f8f6;
+  background-color: #000;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .container {
@@ -416,3 +427,91 @@ h1, h2 {
 h1, h2, .member-name, .profile-info b {
   text-shadow: 0 0 5px #ff0058, 0 0 10px #ff0058, 0 0 20px #ffbc00;
   color: #fff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .profile-section {
+    padding: 20px;
+  }
+  
+  .profile-box {
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    margin: 0 auto;
+  }
+
+  .profile {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .profile img {
+    max-width: 120px;
+    margin: 0 auto;
+  }
+
+  .profile-info {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .social-media-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+  }
+
+  .social-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mini-music-player {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 0;
+  }
+
+  .activity {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activity-card img {
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 5px;
+  }
+
+  .profile-section {
+    padding: 10px;
+  }
+
+  .profile-box {
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin: 0 auto;
+  }
+
+  .social-media-links {
+    gap: 6px;
+  }
+
+  .social-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .activity {
+    grid-template-columns: 1fr;
+  }
+}
