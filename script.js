@@ -1,3 +1,30 @@
+// Restore inline activity formatting without accepting scripts or event handlers.
+function renderActivityText(value) {
+  const parsed = new DOMParser().parseFromString(String(value ?? ''), 'text/html');
+  const allowed = new Set(['A', 'B', 'STRONG', 'I', 'EM', 'SPAN', 'BR']);
+  const blocked = new Set(['SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'EMBED', 'SVG', 'MATH', 'TEMPLATE']);
+  function copy(node) {
+    if (node.nodeType === 3) return document.createTextNode(node.textContent);
+    const fragment = document.createDocumentFragment();
+    if (node.nodeType !== 1 || blocked.has(node.tagName)) return fragment;
+    let element = allowed.has(node.tagName) ? document.createElement(node.tagName.toLowerCase()) : fragment;
+    if (node.tagName === 'A') {
+      try {
+        const url = new URL(node.getAttribute('href'));
+        if (url.protocol === 'https:' && ['kenmei.co', 'www.kenmei.co'].includes(url.hostname)
+            && !url.username && !url.password) {
+          element.href = url.href;
+        } else element = document.createElement('span');
+      } catch { element = document.createElement('span'); }
+    }
+    for (const child of node.childNodes) element.append(copy(child));
+    return element;
+  }
+  const result = document.createDocumentFragment();
+  for (const child of parsed.body.childNodes) result.append(copy(child));
+  return result;
+}
+
 // --- Fetch Kenmei Activity ---
 async function fetchKenmeiActivity() {
   const activityFeed = document.getElementById('activity-feed');
@@ -22,7 +49,7 @@ async function fetchKenmeiActivity() {
       const details = document.createElement('div');
       details.className = 'activity-details';
       const title = document.createElement('h3');
-      title.textContent = String(activity.text ?? '');
+      title.append(renderActivityText(activity.text));
       const timestamp = document.createElement('p');
       timestamp.className = 'timestamp';
       timestamp.textContent = 'Posted on: ' + new Date(activity.timestamp).toLocaleDateString();
