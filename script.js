@@ -10,15 +10,27 @@ async function fetchKenmeiActivity() {
       return;
     }
     const lastActivities = activities.slice(0, 8);
-    activityFeed.innerHTML = lastActivities.map(activity => `
-      <div class="activity-card">
-        <img src="${activity.cover}" alt="Cover Image">
-        <div class="activity-details">
-          <h3>${activity.text}</h3>
-          <p class="timestamp">Posted on: ${new Date(activity.timestamp).toLocaleDateString()}</p>
-        </div>
-      </div>
-    `).join('');
+    const cards = lastActivities.map(activity => {
+      const card = document.createElement('div');
+      card.className = 'activity-card';
+      const cover = document.createElement('img');
+      cover.alt = 'Cover Image';
+      try {
+        const coverUrl = new URL(activity.cover);
+        if (coverUrl.protocol === 'https:') cover.src = coverUrl.href;
+      } catch {}
+      const details = document.createElement('div');
+      details.className = 'activity-details';
+      const title = document.createElement('h3');
+      title.textContent = String(activity.text ?? '');
+      const timestamp = document.createElement('p');
+      timestamp.className = 'timestamp';
+      timestamp.textContent = 'Posted on: ' + new Date(activity.timestamp).toLocaleDateString();
+      details.append(title, timestamp);
+      card.append(cover, details);
+      return card;
+    });
+    activityFeed.replaceChildren(...cards);
   } catch (error) {
     console.error('Error fetching activity:', error);
     activityFeed.textContent = 'Failed to load activity. Please try again later.';
