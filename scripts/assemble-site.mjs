@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const appNames = ['wordle', 'manga', 'evomon', 'roblox'];
-const excluded = new Set(['.git', '.github', 'scripts', '_apps', '_site', ...appNames]);
+const excluded = new Set(['.git', '.github', 'scripts', 'releases', '_apps', '_site', ...appNames]);
 
 export async function assembleSite({ root, appsRoot, output }) {
   root = path.resolve(root);
@@ -38,3 +38,4 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const root = process.cwd();
   await assembleSite({ root, appsRoot: path.join(root, '_apps'), output: path.join(root, '_site') });
 }
+
