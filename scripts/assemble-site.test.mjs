@@ -11,7 +11,7 @@ async function fixture() {
   await writeFile(path.join(root, 'CNAME'), 'dat.place\n');
   await mkdir(path.join(root, 'wordle'));
   await writeFile(path.join(root, 'wordle', 'old.txt'), 'Old copied app must not be published');
-  for (const app of ['wordle', 'manga', 'evomon', 'roblox']) {
+  for (const app of ['wordle', 'manga', 'evomon', 'roblox', 'translate']) {
     const dir = path.join(root, '_apps', app, 'site');
     await mkdir(path.join(dir, 'assets'), { recursive: true });
     await writeFile(path.join(dir, 'index.html'), `<script type="module" src="/${app}/assets/app.js"></script>`);
@@ -28,7 +28,7 @@ test('preserves homepage and URLs while publishing only each repository site dir
   assert.equal((await readFile(path.join(options.output, 'CNAME'), 'utf8')).trim(), 'dat.place');
   await assert.rejects(stat(path.join(options.output, '_apps')));
   await assert.rejects(stat(path.join(options.output, 'wordle', 'old.txt')));
-  for (const app of ['wordle', 'manga', 'evomon', 'roblox']) {
+  for (const app of ['wordle', 'manga', 'evomon', 'roblox', 'translate']) {
     assert.equal(await readFile(path.join(options.output, app, 'assets', 'app.js'), 'utf8'), `console.log('${app}');`);
     await assert.rejects(stat(path.join(options.output, app, 'private-source.txt')));
   }

@@ -67,6 +67,10 @@ jobs:
         run: |
           mkdir -p _apps/roblox/site
           cp -R releases/roblox/. _apps/roblox/site/
+      - name: Prepare translator static release
+        run: |
+          mkdir -p _apps/translate/site
+          cp -R releases/translate/. _apps/translate/site/
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

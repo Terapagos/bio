@@ -9,6 +9,7 @@ static releases live in their own repositories:
 | /manga/ | Terapagos/manga | site/ |
 | /evomon/ | Terapagos/Evomon-Pokedex | site/ |
 | /roblox/ | Terapagos/Adurite-Limited-Price-Tracker | releases/roblox/ (built public assets only) |
+| /translate/ | Terapagos/manga-translator | releases/translate/ (public frontend only) |
 
 The Pages workflow checks out those folders, validates their asset paths, and
 assembles a deployment artifact. The Roblox release is mirrored as built public assets in releases/roblox/ because its source repository is private; no source credentials are published.

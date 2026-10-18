@@ -2,7 +2,7 @@ import { cp, mkdir, readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const appNames = ['wordle', 'manga', 'evomon', 'roblox'];
+const appNames = ['wordle', 'manga', 'evomon', 'roblox', 'translate'];
 const excluded = new Set(['.git', '.github', 'scripts', 'releases', '_apps', '_site', ...appNames]);
 
 export async function assembleSite({ root, appsRoot, output }) {
@@ -31,7 +31,7 @@ export async function assembleSite({ root, appsRoot, output }) {
   }
   for (const [app, directory] of sources) await cp(directory, path.join(output, app), { recursive: true });
   if ((await readFile(path.join(output, 'CNAME'), 'utf8')).trim() !== 'dat.place') throw new Error('Custom domain must remain dat.place');
-  console.log('Assembled dat.place homepage and /wordle, /manga, /evomon, /roblox from their own repositories.');
+  console.log('Assembled dat.place homepage and /wordle, /manga, /evomon, /roblox, /translate.');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
