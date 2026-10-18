@@ -8,6 +8,7 @@ static releases live in their own repositories:
 | /wordle/ | Terapagos/Wordle-Solver | site/ |
 | /manga/ | Terapagos/manga | site/ |
 | /evomon/ | Terapagos/Evomon-Pokedex | site/ |
+| /roblox/ | Terapagos/Adurite-Limited-Price-Tracker | site/ |
 
 The Pages workflow checks out those folders, validates their asset paths, and
 assembles a deployment artifact. App files are not committed in this repository.
@@ -29,4 +30,3 @@ repositories workflow in this repository. Homepage commits publish automatically
 App source edits alone require rebuilding and committing that app's site/ first.
 
 Local verification: node --test scripts/assemble-site.test.mjs.
-
