@@ -1,89 +1,15 @@
-name: Publish dat.place from app repositories
-
+name: Publish personal homepage
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 concurrency:
-  group: dat-place-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
+  group: bio-homepage
   cancel-in-progress: false
-
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - run: node --test scripts/assemble-site.test.mjs
-
-  build:
-    if: github.event_name != 'pull_request'
-    needs: validate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check read-only repository keys
-        env:
-          WORDLE_KEY: ${{ secrets.DAT_PLACE_WORDLE_KEY }}
-          MANGA_KEY: ${{ secrets.DAT_PLACE_MANGA_KEY }}
-        run: |
-          test -n "$WORDLE_KEY" || { echo 'Set DAT_PLACE_WORDLE_KEY to the Wordle-Solver read-only deploy key.'; exit 1; }
-          test -n "$MANGA_KEY" || { echo 'Set DAT_PLACE_MANGA_KEY to the manga read-only deploy key.'; exit 1; }
-      - name: Read Wordle release
-        uses: actions/checkout@v4
-        with:
-          repository: Terapagos/Wordle-Solver
-          ref: main
-          path: _apps/wordle
-          sparse-checkout: site
-          ssh-key: ${{ secrets.DAT_PLACE_WORDLE_KEY }}
-          persist-credentials: false
-      - name: Read manga release
-        uses: actions/checkout@v4
-        with:
-          repository: Terapagos/manga
-          ref: main
-          path: _apps/manga
-          sparse-checkout: site
-          ssh-key: ${{ secrets.DAT_PLACE_MANGA_KEY }}
-          persist-credentials: false
-      - name: Read Evomon release
-        uses: actions/checkout@v4
-        with:
-          repository: Terapagos/Evomon-Pokedex
-          ref: main
-          path: _apps/evomon
-          sparse-checkout: site
-          persist-credentials: false
-      - name: Prepare Roblox static release
-        run: |
-          mkdir -p _apps/roblox/site
-          cp -R releases/roblox/. _apps/roblox/site/
-      - name: Prepare translator static release
-        run: |
-          mkdir -p _apps/translate/site
-          cp -R releases/translate/. _apps/translate/site/
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Assemble homepage and app releases
-        run: node scripts/assemble-site.mjs
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
   deploy:
-    if: github.event_name != 'pull_request'
-    needs: build
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -92,7 +18,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy the assembled dat.place site
+      - uses: actions/checkout@v4
+      - name: Prepare only the homepage
+        run: |
+          mkdir _site
+          cp index.html style.css script.js 99lsxsry.png CNAME .nojekyll _site/
+          test "$(cat _site/CNAME)" = "dat.place"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
         id: deployment
-        uses: actions/deploy-pages@v4
-
