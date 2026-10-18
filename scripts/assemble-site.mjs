@@ -16,7 +16,7 @@ export async function assembleSite({ root, appsRoot, output }) {
     const base = `/${app}/`;
     const assets = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
       .map((match) => match[1]).filter((url) => !/^(?:https?:|data:|#)/.test(url));
-    if (!assets.some((url) => url.endsWith('.js'))) throw new Error(`${app}: missing JavaScript entry`);
+    if (!assets.some((url) => url.split(/[?#]/)[0].endsWith('.js'))) throw new Error(`${app}: missing JavaScript entry`);
     for (const url of assets) {
       if (!url.startsWith(base)) throw new Error(`${app}: unexpected asset base ${url}`);
       const asset = path.resolve(directory, decodeURIComponent(url.slice(base.length).split(/[?#]/)[0]));

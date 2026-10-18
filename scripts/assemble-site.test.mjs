@@ -14,7 +14,7 @@ async function fixture() {
   for (const app of ['wordle', 'manga', 'evomon', 'roblox', 'translate']) {
     const dir = path.join(root, '_apps', app, 'site');
     await mkdir(path.join(dir, 'assets'), { recursive: true });
-    await writeFile(path.join(dir, 'index.html'), `<script type="module" src="/${app}/assets/app.js"></script>`);
+    await writeFile(path.join(dir, 'index.html'), `<script type="module" src="/${app}/assets/app.js?v=release1"></script>`);
     await writeFile(path.join(dir, 'assets', 'app.js'), `console.log('${app}');`);
     await writeFile(path.join(root, '_apps', app, 'private-source.txt'), 'Private source must not be published');
   }
