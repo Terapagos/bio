@@ -1,0 +1,90 @@
+name: Publish dat.place from app repositories
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dat-place-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test scripts/assemble-site.test.mjs
+
+  build:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check read-only repository keys
+        env:
+          WORDLE_KEY: ${{ secrets.DAT_PLACE_WORDLE_KEY }}
+          MANGA_KEY: ${{ secrets.DAT_PLACE_MANGA_KEY }}
+        run: |
+          test -n "$WORDLE_KEY" || { echo 'Set DAT_PLACE_WORDLE_KEY to the Wordle-Solver read-only deploy key.'; exit 1; }
+          test -n "$MANGA_KEY" || { echo 'Set DAT_PLACE_MANGA_KEY to the manga read-only deploy key.'; exit 1; }
+      - name: Read Wordle release
+        uses: actions/checkout@v4
+        with:
+          repository: Terapagos/Wordle-Solver
+          ref: main
+          path: _apps/wordle
+          sparse-checkout: site
+          ssh-key: ${{ secrets.DAT_PLACE_WORDLE_KEY }}
+          persist-credentials: false
+      - name: Read manga release
+        uses: actions/checkout@v4
+        with:
+          repository: Terapagos/manga
+          ref: main
+          path: _apps/manga
+          sparse-checkout: site
+          ssh-key: ${{ secrets.DAT_PLACE_MANGA_KEY }}
+          persist-credentials: false
+      - name: Read Evomon release
+        uses: actions/checkout@v4
+        with:
+          repository: Terapagos/Evomon-Pokedex
+          ref: main
+          path: _apps/evomon
+          sparse-checkout: site
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Assemble homepage and app releases
+        run: node scripts/assemble-site.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the assembled dat.place site
+        id: deployment
+        uses: actions/deploy-pages@v4
+
