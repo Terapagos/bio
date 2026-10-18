@@ -8,10 +8,10 @@ static releases live in their own repositories:
 | /wordle/ | Terapagos/Wordle-Solver | site/ |
 | /manga/ | Terapagos/manga | site/ |
 | /evomon/ | Terapagos/Evomon-Pokedex | site/ |
-| /roblox/ | Terapagos/Adurite-Limited-Price-Tracker | site/ |
+| /roblox/ | Terapagos/Adurite-Limited-Price-Tracker | releases/roblox/ (built public assets only) |
 
 The Pages workflow checks out those folders, validates their asset paths, and
-assembles a deployment artifact. App files are not committed in this repository.
+assembles a deployment artifact. The Roblox release is mirrored as built public assets in releases/roblox/ because its source repository is private; no source credentials are published.
 Only each app's site/ directory is published; private source is excluded.
 
 Wordle and manga are private. Configure distinct read-only SSH deploy keys on
@@ -30,3 +30,4 @@ repositories workflow in this repository. Homepage commits publish automatically
 App source edits alone require rebuilding and committing that app's site/ first.
 
 Local verification: node --test scripts/assemble-site.test.mjs.
+
