@@ -10,9 +10,12 @@ async function api(path,options={}){
 const post=(path,data)=>api(path,{method:'POST',body:JSON.stringify(data)});
 function safe(fn){return async(...args)=>{try{await fn(...args);}catch(e){message(e.message);}};}
 async function refresh(){chapters=await api('/api/chapters');$('chapters').replaceChildren();for(const c of [...chapters].reverse()){const b=document.createElement('button');b.textContent=c.title;const status=document.createElement('span');status.textContent=`${c.pages.length} pages · ${c.status}`;b.append(status);b.onclick=safe(()=>open(c));$('chapters').append(b);}}
-async function unlock(){await refresh();$('login').hidden=true;$('workspace').hidden=false;$('disconnect').hidden=false;sessionStorage.setItem('panel-backend',backend);sessionStorage.setItem('panel-token',token);message('');}
+async function unlock(){await refresh();$('login').hidden=true;$('workspace').hidden=false;$('disconnect').hidden=false;$('accessSettings').hidden=false;sessionStorage.setItem('panel-backend',backend);sessionStorage.setItem('panel-token',token);message('');}
 $('connect').onsubmit=safe(async e=>{e.preventDefault();const url=new URL($('backend').value);if(url.protocol!=='https:'&&!(url.protocol==='http:'&&['127.0.0.1','localhost'].includes(url.hostname)))throw Error('Use an HTTPS backend address');if(url.username||url.password||url.search||url.hash)throw Error('Enter a plain backend address');backend=url.origin;token=$('token').value;await unlock();});
 $('disconnect').onclick=()=>{token='';sessionStorage.removeItem('panel-token');location.reload();};
+$('accessSettings').onclick=()=>{$('accessForm').hidden=!$('accessForm').hidden;};
+$('cancelAccess').onclick=()=>{$('accessForm').reset();$('accessForm').hidden=true;};
+$('accessForm').onsubmit=safe(async e=>{e.preventDefault();const next=$('newToken').value;if(next!==$('confirmToken').value)throw Error('New access tokens do not match');$('updateAccess').disabled=true;try{await api('/api/access-token',{method:'PUT',body:JSON.stringify({currentToken:$('currentToken').value,newToken:next})});token=next;sessionStorage.setItem('panel-token',token);$('accessForm').reset();$('accessForm').hidden=true;message('Access token changed. Use the new token on your other devices; the old token no longer works.');}finally{$('updateAccess').disabled=false;}});
 async function open(c){current=c;pageIndex=0;selected=-1;$('empty').hidden=true;$('chapter').hidden=false;await showPage();}
 async function showPage(){
   if(!current||loading)return;loading=true;try{
