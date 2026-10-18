@@ -63,6 +63,14 @@ jobs:
           path: _apps/evomon
           sparse-checkout: site
           persist-credentials: false
+      - name: Read Roblox tracker release
+        uses: actions/checkout@v4
+        with:
+          repository: Terapagos/Adurite-Limited-Price-Tracker
+          ref: 20f61eee4661e1d88d7e6fed665aad1fca4f1c86
+          path: _apps/roblox
+          sparse-checkout: site
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -87,4 +95,3 @@ jobs:
       - name: Deploy the assembled dat.place site
         id: deployment
         uses: actions/deploy-pages@v4
-
